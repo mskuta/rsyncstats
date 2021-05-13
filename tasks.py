@@ -18,6 +18,12 @@ def clean(c):
 
 
 @task
+def format(c):
+    for pyfile in Path.cwd().rglob("*.py"):
+        c.run(f"yapf --in-place '{pyfile}'")
+
+
+@task
 def install(c, prefix="/usr/local"):
     predir = Path(prefix).expanduser()
 
