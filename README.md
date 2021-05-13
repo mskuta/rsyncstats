@@ -7,23 +7,25 @@ rsyncstats summarizes transfer logs produced by the rsync daemon. For each day t
 
 ## From package
 
-### Debian and derivatives (Ubuntu, Raspbian, etc.)
+### Debian and derivatives
 
 1. Download the latest .deb package from the [Releases](https://github.com/mskuta/rsyncstats/releases/latest) page.
 2. Install it: `sudo dpkg --install rsyncstats_x.y.z_all.deb`
 
 ## From source
 
+The following steps require the presence of the [invoke](https://www.pyinvoke.org/) tool.
+
 ### As root user
 
 1. Clone this repository: `git clone https://github.com/mskuta/rsyncstats.git`
-2. Run the included installation script: `sudo rsyncstats/install.sh`
+2. Run the installation task: `cd rsyncstats && invoke install`
 3. Make sure `/usr/local/bin` is in your `$PATH`.
 
 ### As unprivileged user
 
 1. Clone this repository: `git clone https://github.com/mskuta/rsyncstats.git`
-2. Run the included installation script: `PREFIX=$HOME/.local rsyncstats/install.sh`
+2. Run the installation task: `cd rsyncstats && invoke install --prefix=$HOME/.local`
 3. Make sure `$HOME/.local/bin` is in your `$PATH`.
 
 
