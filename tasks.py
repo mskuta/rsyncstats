@@ -4,6 +4,7 @@
 from invoke import task
 from invoke.tasks import call
 from pathlib import Path
+from zipapp import create_archive
 
 prjdir = Path(__file__).parent.resolve()
 prjname = prjdir.name
@@ -27,22 +28,18 @@ def format(c):
 def install(c, prefix="/usr/local"):
     predir = Path(prefix).expanduser()
 
-    # install program
+    # install app
     dstdir = predir / "bin"
     dstdir.mkdir(exist_ok=True, parents=True)
-    srcfile = prjdir / f"{prjname}.py"
-    dstfile = dstdir / srcfile.stem
-    with dstfile.open(mode="w") as f:
-        f.write(f"#!/usr/bin/env python3\n\n{srcfile.read_text()}")
-    dstfile.chmod(0o755)
+    create_archive(prjdir / "app", dstdir / prjname, "/usr/bin/env python3")
 
     # install docs
     dstdir = predir / "share" / "doc" / prjname
     dstdir.mkdir(exist_ok=True, parents=True)
-    for srcfile in (prjdir / "COPYING", prjdir / "README.md"):
-        dstfile = dstdir / srcfile.name
+    for docfile in (prjdir / "COPYING", prjdir / "README.md"):
+        dstfile = dstdir / docfile.name
         with dstfile.open(mode="w") as f:
-            f.write(srcfile.read_text())
+            f.write(docfile.read_text())
         dstfile.chmod(0o644)
 
 
