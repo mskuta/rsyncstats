@@ -9,8 +9,7 @@ prjdir = Path(__file__).parent.resolve()
 prjname = prjdir.name
 prjvers = Path(prjdir, "VERSION").read_text().rstrip()
 prjarch = "all"
-pkgname = f"{prjname}_{prjvers}_{prjarch}"
-blddir = prjdir / "build" / pkgname
+blddir = prjdir / "build" / f"{prjname}_{prjvers}_{prjarch}"
 
 
 @task
