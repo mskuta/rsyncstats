@@ -5,11 +5,12 @@ from invoke import task
 from invoke.tasks import call
 from pathlib import Path
 
-prjname = Path.cwd().name
-prjvers = Path("VERSION").read_text().rstrip()
+prjdir = Path(__file__).parent.resolve()
+prjname = prjdir.name
+prjvers = Path(prjdir, "VERSION").read_text().rstrip()
 prjarch = "all"
 pkgname = f"{prjname}_{prjvers}_{prjarch}"
-blddir = Path("build", pkgname)
+blddir = prjdir / "build" / pkgname
 
 
 @task
@@ -19,7 +20,7 @@ def clean(c):
 
 @task
 def format(c):
-    for pyfile in Path.cwd().rglob("*.py"):
+    for pyfile in prjdir.rglob("*.py"):
         c.run(f"yapf --in-place '{pyfile}'")
 
 
@@ -30,7 +31,7 @@ def install(c, prefix="/usr/local"):
     # install program
     dstdir = predir / "bin"
     dstdir.mkdir(exist_ok=True, parents=True)
-    srcfile = Path(f"{prjname}.py")
+    srcfile = prjdir / f"{prjname}.py"
     dstfile = dstdir / srcfile.stem
     with dstfile.open(mode="w") as f:
         f.write(f"#!/usr/bin/env python3\n\n{srcfile.read_text()}")
@@ -39,7 +40,7 @@ def install(c, prefix="/usr/local"):
     # install docs
     dstdir = predir / "share" / "doc" / prjname
     dstdir.mkdir(exist_ok=True, parents=True)
-    for srcfile in (Path("COPYING"), Path("README.md")):
+    for srcfile in (prjdir / "COPYING", prjdir / "README.md"):
         dstfile = dstdir / srcfile.name
         with dstfile.open(mode="w") as f:
             f.write(srcfile.read_text())

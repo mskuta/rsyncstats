@@ -19,13 +19,13 @@ The following steps require the presence of the [invoke](https://www.pyinvoke.or
 ### As root user
 
 1. Clone this repository: `git clone https://github.com/mskuta/rsyncstats.git`
-2. Run the installation task: `cd rsyncstats && invoke install`
+2. Run the installation task: `invoke -r rsyncstats install`
 3. Make sure `/usr/local/bin` is in your `$PATH`.
 
 ### As unprivileged user
 
 1. Clone this repository: `git clone https://github.com/mskuta/rsyncstats.git`
-2. Run the installation task: `cd rsyncstats && invoke install --prefix=$HOME/.local`
+2. Run the installation task: `invoke -r rsyncstats install --prefix=$HOME/.local`
 3. Make sure `$HOME/.local/bin` is in your `$PATH`.
 
 
